@@ -6,49 +6,54 @@ const prisma = new PrismaClient()
 export default class UsersController {
   //
   async index() {
-    const user = await prisma.users.findMany()
+    const usersFound = await prisma.users.findMany()
     try {
-      if (user.length <= 0) return 'There no users!'
-      return user
+      if (usersFound.length <= 0) return 'There no users!'
+      return usersFound
     } catch (e) {
       throw e.message
     }
   }
+
   async store({ request }: HttpContext) {
     const data = request.only(['email', 'password', 'name', 'address'])
-    const user = await prisma.users.create({ data })
 
-    return user
+    const userCreated = await prisma.users.create({ data })
+    return userCreated
   }
+
   async show({ params }: HttpContext) {
-    const user = await prisma.users.findUnique({
+    const userCondiction = {
       where: {
         id: `${params.id}`,
       },
-    })
+    }
 
-    return user
+    const userFound = await prisma.users.findUnique(userCondiction)
+    return userFound
   }
+
   async update({ params, request }: HttpContext) {
     const data = request.only(['email', 'password', 'name', 'address'])
-    const user = {
+    const userCondiction = {
       where: {
         id: `${params.id}`,
       },
       data,
     }
 
-    const userUpdated = await prisma.users.update(user)
+    const userUpdated = await prisma.users.update(userCondiction)
     return userUpdated
   }
 
   async destroy({ params }: HttpContext) {
-    const user = {
+    const userCondiction = {
       where: {
         id: `${params.id}`,
       },
     }
-    await prisma.users.delete(user)
+
+    await prisma.users.delete(userCondiction)
     return 'User Successfull Deleted.'
   }
 }

@@ -54,6 +54,6 @@ export default class UsersController {
     }
 
     await prisma.users.delete(userCondiction)
-    return 'User Successfull Deleted.'
+    return 'User deleted successfully'
   }
 }

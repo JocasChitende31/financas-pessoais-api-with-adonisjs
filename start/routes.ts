@@ -18,11 +18,14 @@ router.get('/', async () => {
 })
 //User
 router.get('users', [UsersController, 'index'])
-router.get('/user/:id', [UsersController, 'show'])
-router.post('create', [UsersController, 'store'])
-router.put('update/:id', [UsersController, 'update'])
-router.delete('delete/:id', [UsersController, 'destroy'])
+router.get('user/:id', [UsersController, 'show'])
+router.post('create-user', [UsersController, 'store'])
+router.put('update-user/:id', [UsersController, 'update'])
+router.delete('delete-user/:id', [UsersController, 'destroy'])
 
 //WorkCompany
 router.get('companies', [WorkCompaniesController, 'index'])
-router.post('company', [WorkCompaniesController, 'store'])
+router.get('company/:id', [WorkCompaniesController, 'show'])
+router.post('create-company', [WorkCompaniesController, 'store'])
+router.put('update-company/:id', [WorkCompaniesController, 'update'])
+router.delete('delete-company/:id', [WorkCompaniesController, 'destroy'])

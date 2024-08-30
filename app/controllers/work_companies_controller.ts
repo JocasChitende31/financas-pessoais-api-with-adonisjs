@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 
 export default class WorkCompaniesController {
   async index() {
-    const componiesFound = await prisma.workCompany.findMany()
+    const componiesFound = await prisma.company.findMany({ include: { user: true } })
     if (componiesFound.length <= 0) return 'There is no work company registered'
     return componiesFound
   }
@@ -17,19 +17,21 @@ export default class WorkCompaniesController {
       },
     }
 
-    const companyFound = await prisma.workCompany.findUnique(workCompanyCondition)
+    const companyFound = await prisma.company.findUnique(workCompanyCondition)
     return companyFound
   }
 
   async store({ request }: HttpContext) {
-    const data = request.only(['description', 'address'])
+    const data = request.only(['description', 'address', 'user'])
 
-    const companyCreated = await prisma.workCompany.create({ data })
+    const companyCreated = await prisma.company.create({
+      data,
+    })
     return companyCreated
   }
 
   async update({ params, request }: HttpContext) {
-    const data = request.only(['description', 'address'])
+    const data = request.only(['description', 'address', 'usersId'])
     const workCompanyCondiction = {
       where: {
         id: `${params.id}`,
@@ -37,7 +39,7 @@ export default class WorkCompaniesController {
       data,
     }
 
-    const userUdated = await prisma.workCompany.update(workCompanyCondiction)
+    const userUdated = await prisma.company.update(workCompanyCondiction)
     return userUdated
   }
 
@@ -47,7 +49,7 @@ export default class WorkCompaniesController {
         id: `${params.id}`,
       },
     }
-    await prisma.workCompany.delete(workCompanyCondition)
+    await prisma.company.delete(workCompanyCondition)
     return 'Company deleted successfully'
   }
 }

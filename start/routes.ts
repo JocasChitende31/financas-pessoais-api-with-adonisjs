@@ -7,6 +7,7 @@
 |
 */
 
+const FeesController = () => import('#controllers/fees_controller')
 import router from '@adonisjs/core/services/router'
 const SourceOfIncomesController = () => import('#controllers/source_of_incomes_controller')
 const UsersController = () => import('#controllers/users_controller')
@@ -37,3 +38,10 @@ router.get('income/:id', [SourceOfIncomesController, 'show'])
 router.post('create-income', [SourceOfIncomesController, 'store'])
 router.put('update-income/:id', [SourceOfIncomesController, 'update'])
 router.delete('delete-income/:id', [SourceOfIncomesController, 'destroy'])
+
+//Fees
+router.get('fees', [FeesController, 'index'])
+router.get('fee/:id', [FeesController, 'show'])
+router.post('create-fee', [FeesController, 'store'])
+router.put('update-fee/:id', [FeesController, 'update'])
+router.delete('delete-fee/:id', [FeesController, 'destroy'])

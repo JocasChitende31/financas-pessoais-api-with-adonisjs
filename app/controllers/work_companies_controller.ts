@@ -11,13 +11,13 @@ export default class WorkCompaniesController {
   }
 
   async show({ params }: HttpContext) {
-    const workCompanyCondition = {
+    const companyCondition = {
       where: {
         id: `${params.id}`,
       },
     }
 
-    const companyFound = await prisma.company.findUnique(workCompanyCondition)
+    const companyFound = await prisma.company.findUnique(companyCondition)
     return companyFound
   }
 
@@ -31,15 +31,15 @@ export default class WorkCompaniesController {
   }
 
   async update({ params, request }: HttpContext) {
-    const data = request.only(['description', 'address', 'usersId'])
-    const workCompanyCondiction = {
+    const data = request.only(['description', 'address', 'user'])
+    const companyCondiction = {
       where: {
         id: `${params.id}`,
       },
       data,
     }
 
-    const userUdated = await prisma.company.update(workCompanyCondiction)
+    const userUdated = await prisma.company.update(companyCondiction)
     return userUdated
   }
 

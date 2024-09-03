@@ -33,4 +33,7 @@ router.delete('delete-company/:id', [WorkCompaniesController, 'destroy'])
 
 //SourceOfIncomes
 router.get('incomes', [SourceOfIncomesController, 'index'])
+router.get('income/:id', [SourceOfIncomesController, 'show'])
 router.post('create-income', [SourceOfIncomesController, 'store'])
+router.put('update-income/:id', [SourceOfIncomesController, 'update'])
+router.delete('delete-income/:id', [SourceOfIncomesController, 'destroy'])

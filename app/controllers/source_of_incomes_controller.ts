@@ -5,7 +5,11 @@ const prisma = new PrismaClient()
 
 export default class SourceOfIncomesController {
   async index() {
-    const sourceOfIncomes = await prisma.income.findMany()
+    const sourceOfIncomes = await prisma.income.findMany({
+      include: {
+        company: true,
+      },
+    })
     try {
       if (sourceOfIncomes.length <= 0) return 'There is no source of incomes registered'
       return sourceOfIncomes
@@ -24,5 +28,37 @@ export default class SourceOfIncomesController {
       console.log(e.message)
       throw e.message
     }
+  }
+
+  async show({ params }: HttpContext) {
+    const incomeCondiction = {
+      where: {
+        id: `${params.id}`,
+      },
+    }
+    const income = await prisma.income.findUnique(incomeCondiction)
+    return income
+  }
+
+  async update({ params, request }: HttpContext) {
+    const data = request.only(['salarioBase', 'subsidios', 'company'])
+    const incomeCondictionToUpdate = {
+      where: {
+        id: `${params.id}`,
+      },
+      data,
+    }
+    const incomeUpdated = await prisma.income.update(incomeCondictionToUpdate)
+    return incomeUpdated
+  }
+
+  async destroy({ params }: HttpContext) {
+    const incomeCondiction = {
+      where: {
+        id: `${params.id}`,
+      },
+    }
+    await prisma.income.delete(incomeCondiction)
+    return 'Source of Income deleted successfully'
   }
 }

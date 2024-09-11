@@ -37,8 +37,8 @@ export default class ExpensesController {
   async update({ params, request }: HttpContext) {
     const data = request.only(['description', 'invoceRef', 'cost', 'dateOfBuying', 'expensesKind'])
     const updateExpenseCondiction = { where: { id: `${params.id}` }, data }
-    const expenseUpdated = await prisma.expenses.update(updateExpenseCondiction)
     try {
+      const expenseUpdated = await prisma.expenses.update(updateExpenseCondiction)
       return expenseUpdated
     } catch (err) {
       throw err.message

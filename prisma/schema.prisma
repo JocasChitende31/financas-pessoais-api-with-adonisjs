@@ -56,14 +56,14 @@ model Expenses {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  ExpensesKind   ExpensesKind @relation(fields: [expensesKindId], references: [id])
+  expensesKind   ExpensesKind @relation(fields: [expensesKindId], references: [id])
   expensesKindId String       @db.ObjectId
 }
 
 model ExpensesKind {
   id          String     @id @default(auto()) @map("_id") @db.ObjectId
   description String
-  Expenses    Expenses[]
+  expenses    Expenses[]
 }
 
 model SavingAccount {

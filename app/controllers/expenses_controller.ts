@@ -5,7 +5,11 @@ const prisma = new PrismaClient()
 
 export default class ExpensesController {
   async index() {
-    const expenses = await prisma.expenses.findMany()
+    const expenses = await prisma.expenses.findMany({
+      include: {
+        expensesKind: true,
+      },
+    })
     try {
       if (expenses.length <= 0) return 'There is no expense available'
       return expenses
@@ -18,7 +22,7 @@ export default class ExpensesController {
     try {
       if (data !== null) {
         const expense = await prisma.expenses.create({ data })
-        return `Expenses created \n ${expense} \n successfully`
+        return expense
       }
       return data
     } catch (err) {
@@ -26,7 +30,7 @@ export default class ExpensesController {
     }
   }
   async show({ params }: HttpContext) {
-    const expenseCondiction = { where: { id: `${params.id}` } }
+    const expenseCondiction = { where: { id: `${params.id}` }, include: { expensesKind: true } }
     const expense = await prisma.expenses.findUnique(expenseCondiction)
     try {
       return expense

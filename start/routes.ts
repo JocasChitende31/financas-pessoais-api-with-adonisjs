@@ -44,16 +44,16 @@ router.delete('delete-income/:id', [SourceOfIncomesController, 'destroy'])
 //Exponses
 router.get('expenses', [ExpensesController, 'index'])
 router.get('expense/:id', [ExpensesController, 'show'])
-router.post('create-expene', [ExpensesController, 'store'])
-router.put('update-expense', [ExpensesController, 'update'])
-router.delete('delete-exponse', [ExpensesController, 'destroy'])
+router.post('create-expense', [ExpensesController, 'store'])
+router.put('update-expense/:id', [ExpensesController, 'update'])
+router.delete('delete-expense/:id', [ExpensesController, 'destroy'])
 
 //ExpensesKind
 router.get('expenses-kind', [ExpensesKindsController, 'index'])
 router.get('expenses-kind/:id', [ExpensesKindsController, 'show'])
 router.post('create-expenses-kind', [ExpensesKindsController, 'store'])
-router.put('update-expense-kind', [ExpensesKindsController, 'update'])
-router.delete('delete-expense-kind', [ExpensesKindsController, 'destroy'])
+router.put('update-expense-kind/:id', [ExpensesKindsController, 'update'])
+router.delete('delete-expense-kind/:id', [ExpensesKindsController, 'destroy'])
 //Fees
 router.get('fees', [FeesController, 'index'])
 router.get('fee/:id', [FeesController, 'show'])
